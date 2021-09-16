@@ -7,6 +7,7 @@ class Board extends React.Component {
       className += " selected";
     }
     return (
+      
       <div className={className}>
         {this.props.index + 1}
       </div>
@@ -15,19 +16,28 @@ class Board extends React.Component {
 }
 
 class BoardSwitcher extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      select: 0
+    }
+  }
+  next(){
+    this.setState({select: (this.state.select+1)%3});
+  }
+  
   render() {
     let boards = [];
     for (let ii = 0; ii < this.props.numBoards; ii++) {
-      let isSelected = ii === 0;
+      let isSelected = ii === this.state.select;
       boards.push(
         <Board index={ii} selected={isSelected} key={ii} />
       );
     }
-
     return (
       <div>
         <div className="boards">{boards}</div>
-        <button>Toggle</button>
+        <button onClick={()=>this.next()}>Toggle</button>
       </div>
     );
   }
