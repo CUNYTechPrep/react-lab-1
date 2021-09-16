@@ -1,36 +1,36 @@
-import React from 'react';
+import React, {useState} from 'react';
 
-class Board extends React.Component {
-  render() {
-    let className = "board";
-    if (this.props.selected) {
-      className += " selected";
-    }
+const Board = ({index, selected, setActive}) => {
+    const handleStyling = () => selected ? " selected" : "";
+
     return (
-      <div className={className}>
-        {this.props.index + 1}
-      </div>
-    );
-  }
+        <div className={"board " + handleStyling()}>
+            {index + 1}
+        </div>
+    )
 }
 
-class BoardSwitcher extends React.Component {
-  render() {
-    let boards = [];
-    for (let ii = 0; ii < this.props.numBoards; ii++) {
-      let isSelected = ii === 0;
-      boards.push(
-        <Board index={ii} selected={isSelected} key={ii} />
-      );
+const BoardSwitcher = ({numBoards}) => {
+    const [active, setActive] = useState(0);
+
+    const generateBoards = () => {
+        const boards = [];
+
+        for (let i = 0; i < numBoards; i++) {
+            boards.push(<Board index={i} selected={i === active} key={i} setActive={setActive}/>)
+        }
+
+        return boards
     }
 
+    const handleToggleClick = () => setActive((active + 1) % 3);
+
     return (
-      <div>
-        <div className="boards">{boards}</div>
-        <button>Toggle</button>
-      </div>
-    );
-  }
+        <div>
+            <div className={"boards"}>{generateBoards()}</div>
+            <button onClick={handleToggleClick}>Toggle</button>
+        </div>
+    )
 }
 
 export default BoardSwitcher;
