@@ -25,9 +25,13 @@ class BoardSwitcher extends React.Component {
 
         /* Create the boards and set first board to be selected. */
         for (let i = 0; i < this.props.numBoards; i += 1) {
+<<<<<<< HEAD
             this.state.boards.push(
                 <Board index={i} selected={i === 0} key={i} />
             );
+=======
+            this.state.boards.push(<Board index={i} selected={i === 0} key={i}/>)
+>>>>>>> master
         }
     }
 
