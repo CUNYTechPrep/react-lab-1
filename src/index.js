@@ -4,6 +4,6 @@ import BoardSwitcher from './BoardSwitcher';
 import './index.css';
 
 ReactDOM.render(
-  <BoardSwitcher numBoards={1} />,
+  <BoardSwitcher numBoards={3} />,
   document.getElementById('root')
 );
