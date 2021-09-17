@@ -22,7 +22,17 @@ class BoardSwitcher extends React.Component {
     super(props);
     this.changeItem = this.changeItem.bind(this);
   }
-  
+  changeItem(){
+    if(this.state.item === this.props.numBoards - 1){
+      this.setState({
+        item: 0
+      });
+    } else {
+      this.setState({
+        item: this.state.item + 1
+      })
+    }
+  }
 
   render() {
     let boards = [];
