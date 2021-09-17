@@ -17,36 +17,34 @@ class Board extends React.Component {
 class BoardSwitcher extends React.Component {
     constructor(props) {
         super(props);
-        /* state consists of the array of boards and currently selected board */
-        let boards = [];
-        /* Create the boards and set first board to be selected. */
-        for (let i = 0; i < this.props.numBoards; i += 1) {
-            boards.push(<Board index={i} selected={i === 0} key={i}/>)
-        }
         this.state = {
             toggledIndex: 0,
-            boards: boards
+            boards: []
         }
-
-
+        /* Create the boards and set first board to be selected. */
+        for (let i = 0; i < this.props.numBoards; i += 1) {
+            this.state.boards.push(<Board index={i} selected={i === 0} key={i}/>)
+        }
     }
 
     /* Update index of next selected board. If index out of bounds, wrap around. */
     updateToggleIndex() {
+        let boardsCopy = this.state.boards;
         let newIndex = (this.state.toggledIndex + 1) % this.state.boards.length;
-        this.setState({toggledIndex: newIndex});
+        let oldIndex = (newIndex - 1 < 0) ? this.state.boards.length - 1 : newIndex - 1;
+        /* Toggle the board at the new index. */
+        boardsCopy[newIndex] = <Board index={newIndex} selected={true} key={newIndex}/>
+        /* Un-toggle the board at the new index if numBoards > 1, else leave it toggled. */
+        if (this.props.numBoards !== 1) {
+            boardsCopy[oldIndex] = <Board index={oldIndex} selected={false} key={oldIndex}/>
+        }
+
+        this.setState({toggledIndex: newIndex, boards: boardsCopy})
     }
 
     render() {
-        let newIndex = this.state.toggledIndex;
-        this.state.boards[newIndex] = <Board index={newIndex} selected={true} key={newIndex}/>
-        /* Unselect the old index, wrap around if old index is out of bounds */
-        let oldIndex = (newIndex - 1 < 0) ? this.state.boards.length - 1 : newIndex - 1;
-        this.state.boards[oldIndex] = <Board index={oldIndex} selected={false} key={oldIndex}/>
-
         return (
             <div>
-
                 <div className="boards">{this.state.boards}</div>
                 <button onClick={() => this.updateToggleIndex()}>Toggle</button>
             </div>
