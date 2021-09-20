@@ -15,10 +15,29 @@ class Board extends React.Component {
 }
 
 class BoardSwitcher extends React.Component {
+
+  constructor(props) {
+
+    super(props);
+    this.state = {
+    selectedIndex: 0
+    }
+    
+  }
+
+  onToggleClick = (event) =>  {
+    // Here's the meat of the problem. Notice how we can use this.props here (and anywhere else in the component).
+    // When this is called, React updates the state and updates the UI to reflect the new render output.
+    this.setState({
+      selectedIndex: (this.state.selectedIndex + 1) % this.props.numBoards
+    })
+  
+  }
+
   render() {
     let boards = [];
     for (let ii = 0; ii < this.props.numBoards; ii++) {
-      let isSelected = ii === 0;
+      let isSelected = ii === this.state.selectedIndex;
       boards.push(
         <Board index={ii} selected={isSelected} key={ii} />
       );
@@ -27,7 +46,8 @@ class BoardSwitcher extends React.Component {
     return (
       <div>
         <div className="boards">{boards}</div>
-        <button>Toggle</button>
+        <button onClick={this.onToggleClick}>Toggle</button>
+        
       </div>
     );
   }
