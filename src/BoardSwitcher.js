@@ -1,3 +1,5 @@
+//Name: Surendra Dhanpaul.
+//TA: Carlos Del Rosario & Chuma Okoro 
 import React from 'react';
 
 class Board extends React.Component {
