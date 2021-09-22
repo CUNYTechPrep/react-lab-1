@@ -21,7 +21,7 @@ class BoardSwitcher extends React.Component {
   }
 
   handleClick(event) {
-    if(this.state.selected < 2) {
+    if(this.state.selected < this.props.numBoards-1) {
       this.setState({
         selected: this.state.selected + 1
       });
