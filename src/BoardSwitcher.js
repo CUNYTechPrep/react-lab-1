@@ -17,10 +17,13 @@ class Board extends React.Component {
 class BoardSwitcher extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {selected: 0};
+    this.state = {selected: 0}; // initial selected board
   }
 
+  // handler to advance to next board
   handleClick(event) {
+    // if haven't reached last board, move to next board
+    // else return to first board
     if(this.state.selected < this.props.numBoards-1) {
       this.setState({
         selected: this.state.selected + 1
@@ -35,7 +38,7 @@ class BoardSwitcher extends React.Component {
   render() {
     let boards = [];
     for (let ii = 0; ii < this.props.numBoards; ii++) {
-      let isSelected = ii === this.state.selected;
+      let isSelected = ii === this.state.selected; // current selected board
       boards.push(
         <Board index={ii} selected={isSelected} key={ii} />
       );
