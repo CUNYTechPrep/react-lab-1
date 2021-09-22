@@ -19,7 +19,7 @@ class BoardSwitcher extends React.Component {
     super(props);
     this.state = {
       clicks: 0,
-    };
+    }
   }
 
   handleClick(event) {
