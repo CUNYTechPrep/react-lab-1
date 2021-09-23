@@ -1,36 +1,37 @@
-import React from 'react';
+import React, { useState } from "react";
 
-class Board extends React.Component {
-  render() {
-    let className = "board";
-    if (this.props.selected) {
-      className += " selected";
-    }
-    return (
-      <div className={className}>
-        {this.props.index + 1}
-      </div>
-    );
+const Board = ({ val, isSelected }) => {
+  if (val === isSelected) {
+    return <div className="board selected"> {val} </div>;
+  } else {
+    return <div className="board"> {val} </div>;
   }
-}
+};
 
-class BoardSwitcher extends React.Component {
-  render() {
-    let boards = [];
-    for (let ii = 0; ii < this.props.numBoards; ii++) {
-      let isSelected = ii === 0;
-      boards.push(
-        <Board index={ii} selected={isSelected} key={ii} />
-      );
-    }
-
-    return (
-      <div>
-        <div className="boards">{boards}</div>
-        <button>Toggle</button>
-      </div>
-    );
+const BoardSwitcher = ({ numBoards }) => {
+  const [isSelected, setIsSelected] = useState(1);
+  let [numberOfBoards, setNumberOfBoards] = useState(numBoards);
+  let arr = [];
+  for (let i = 1; i <= numBoards; i++) {
+    arr.push(i);
   }
-}
+  const toggleFrame = () => {
+    setIsSelected(isSelected + 1);
+    if (isSelected > numberOfBoards - 1) {
+      setIsSelected(1);
+    }
+  };
+
+  return (
+    <div>
+      <div className="boards">
+        {arr.map((val) => {
+          return <Board val={val} isSelected={isSelected} />;
+        })}
+      </div>
+      <button onClick={toggleFrame}>Toggle</button>
+    </div>
+  );
+};
 
 export default BoardSwitcher;
