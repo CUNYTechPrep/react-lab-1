@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 class Board extends React.Component {
   render() {
@@ -6,28 +6,43 @@ class Board extends React.Component {
     if (this.props.selected) {
       className += " selected";
     }
-    return (
-      <div className={className}>
-        {this.props.index + 1}
-      </div>
-    );
+    return <div className={className}>{this.props.index + 1}</div>;
   }
 }
 
 class BoardSwitcher extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      clicks: 0,
+    };
+  }
+
+  handleClick(event) {
+    this.setState({
+      clicks: this.state.clicks + 1,
+    });
+  }
+
   render() {
     let boards = [];
     for (let ii = 0; ii < this.props.numBoards; ii++) {
-      let isSelected = ii === 0;
-      boards.push(
-        <Board index={ii} selected={isSelected} key={ii} />
-      );
+      //check if the index matches the clicks number then state its true and display the border around the clicked BoardSwitcher
+      let isSelected = ii === this.state.clicks;
+      boards.push(<Board index={ii} selected={isSelected} key={ii} />);
+      //once the clicks go past numofBoards reset to default start
+      if (this.state.clicks === this.props.numBoards) {
+        this.setState({
+          clicks: 0,
+        });
+      }
     }
 
     return (
       <div>
         <div className="boards">{boards}</div>
-        <button>Toggle</button>
+        {/*on click return  */}
+        <button onClick={(e) => this.handleClick(e)}>Toggle</button>
       </div>
     );
   }
