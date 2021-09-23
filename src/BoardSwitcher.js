@@ -14,11 +14,26 @@ class Board extends React.Component {
   }
 }
 
+
+
 class BoardSwitcher extends React.Component {
+  constructor(props) {
+    super(props); 
+    this.state = {
+      clicks: 0
+    };
+  }
+
+    handleToggle(event) {
+    this.setState({
+      clicks: (this.state.clicks + 1) % this.props.numBoards //???% this.props.numBoards???
+    });
+  }
+
   render() {
     let boards = [];
     for (let ii = 0; ii < this.props.numBoards; ii++) {
-      let isSelected = ii === 0;
+      let isSelected = ii === this.state.clicks;
       boards.push(
         <Board index={ii} selected={isSelected} key={ii} />
       );
@@ -27,7 +42,7 @@ class BoardSwitcher extends React.Component {
     return (
       <div>
         <div className="boards">{boards}</div>
-        <button>Toggle</button>
+        <button onClick={ (e) => this.handleToggle(e) }>Toggle</button>
       </div>
     );
   }
