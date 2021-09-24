@@ -21,7 +21,7 @@ class BoardSwitcher extends React.Component {
 
   handleClick(event) {
     this.setState({
-      board: (this.state.board +1) % 3
+      board: (this.state.board +1) % this.props.numBoards
     });
   }
 
