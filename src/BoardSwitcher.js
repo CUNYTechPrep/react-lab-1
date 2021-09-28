@@ -1,4 +1,5 @@
 import React from 'react';
+//import ReactDOM from 'react-dom'
 
 class Board extends React.Component {
   render() {
@@ -14,11 +15,26 @@ class Board extends React.Component {
   }
 }
 
-class BoardSwitcher extends React.Component {
+class BoardSwitcher extends React.Component {  
+
+  constructor(props) {
+    super(props);
+    this.state = {
+    selectedIndex: 0
+    }    
+    }
+
+    onToggleClick = (event) => {
+    this.setState({
+      selectedIndex: (this.state.selectedIndex + 1) % this.props.numBoards
+    });
+  }
+
   render() {
-    let boards = [];
+    let boards = []; //array
     for (let ii = 0; ii < this.props.numBoards; ii++) {
-      let isSelected = ii === 0;
+      let isSelected = ii === this.state.selectedIndex;
+      
       boards.push(
         <Board index={ii} selected={isSelected} key={ii} />
       );
@@ -27,10 +43,10 @@ class BoardSwitcher extends React.Component {
     return (
       <div>
         <div className="boards">{boards}</div>
-        <button>Toggle</button>
+        <button onClick={this.onToggleClick}>Toggle</button>
       </div>
     );
   }
 }
 
-export default BoardSwitcher;
+export default BoardSwitcher
