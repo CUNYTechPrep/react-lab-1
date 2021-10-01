@@ -37,7 +37,6 @@ class BoardSwitcher extends React.Component {
   render() {
     let boards = [];
     for (let ii = 0; ii < this.props.numBoards; ii++) {
-      console.log(this.state.selected);
       let isSelected = ii === this.state.selected;
       boards.push(
         <Board index={ii} selected={isSelected} key={ii} />
